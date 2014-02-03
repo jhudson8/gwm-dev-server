@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+var server = require('../index'),
+    argv = require('optimist').argv;
+
+if (argv.h || argv.help) {
+  console.log([
+    "usage: http-server [path] [options]",
+    "",
+    "options:",
+    "  -p                 Port to use [8080]",
+    "  -b                 Base directory",
+    "  -h --help          Print this list and exit."
+  ].join('\n'));
+  process.exit();
+}
+
+var port = argv.p || parseInt(process.env.PORT, 10) || 8080,
+    base = argv.b || './';
+
+var _server = server({
+  port: port,
+  base: base
+}).start();
+
+if (process.platform !== 'win32') {
+  process.on('SIGINT', function () {
+    process.exit();
+  });
+}

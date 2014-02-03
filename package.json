@@ -1,0 +1,20 @@
+{
+  "name": "gwm-dev-server",
+  "version": "0.1.0",
+  "author": "Joe Hudson <joehud@gmail.com>",
+  "description": "Development server made for gulp-web-modules but can be used standalone",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhudson8/gwm-dev-server.git"
+  },
+  "keywords": [
+    "web"
+  ],
+  "licenses": {
+    "type": "MIT",
+    "url": "https://github.com/jhudson8/gwm-dev-server/raw/master/LICENSE"
+  },
+  "dependencies": {
+    "optimist": "~0.5"
+  }
+}
