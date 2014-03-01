@@ -7,13 +7,34 @@ module.exports = function (options) {
       parts = path.split('/'),
       method = req.method;
 
-    for (var i = parts.length; i > 0; i--) {
-      var subParts = parts.slice(0, i),
-        path = options.base + subParts.join('/'),
-        fullPath = (method === 'GET') ? (path + '.json') : (path + '_' + method + '.json');
-      choices.push(fullPath);
+    if (path.indexOf('.') > 0) {
+      // if it has an extension, don't treat like a service call
+      choices.push(options.base + '/' + path);
     }
+    else {
+      parts = parts.map(function(part) {
+        if (isNaN(parseInt(part), 10)) {
+          // not an id
+          return [part];
+        } else {
+          return [part, '_any'];
+        }
+      });
 
+      function iterate(parts, i, prefix) {
+        for (var j in parts[i]) {
+          var _part = parts[i][j];
+          if (i === parts.length - 1) {
+            choices.push(prefix + '/' + _part + '_' + method + '.json');
+            choices.push(prefix + '/' + _part + '.json');
+          } else {
+            prefix = _part ? (prefix + '/' + _part) : prefix;
+            iterate(parts, i+1, prefix);
+          }
+        }
+      }
+      iterate(parts, 0, options.base);
+    }
     callback({
       fileName: choices
     });
