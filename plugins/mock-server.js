@@ -2,18 +2,26 @@ module.exports = function (options) {
   options = options || {};
   options.base = options.base || './dev/mocks/';
 
-  function getFileNameChoices(req, path, callback) {
+  function getFileNameChoices(req, path, base, callback) {
     var choices = [],
       parts = path.split('/'),
       method = req.method;
 
     if (path.indexOf('.') > 0) {
       // if it has an extension, don't treat like a service call
-      choices.push(options.base + '/' + path);
+      choices.push(base + '/' + path);
     }
     else {
       parts = parts.map(function(part) {
-        if (isNaN(parseInt(part), 10)) {
+      var isVar = false;
+      if (part.length >= 32 && part.split('-').join('').length === 32) {
+        // probably a UUID
+        isVar = true;
+        } else if (!isNaN(parseInt(part, 10))) {
+        // might be a unique identifier
+        isVar = true;
+      }
+        if (!isVar) {
           // not an id
           return [part];
         } else {
@@ -22,18 +30,18 @@ module.exports = function (options) {
       });
 
       function iterate(parts, i, prefix) {
-        for (var j in parts[i]) {
-          var _part = parts[i][j];
+      for (var j in parts[i]) {
+      var _part = parts[i][j];
           if (i === parts.length - 1) {
             choices.push(prefix + '/' + _part + '_' + method + '.json');
             choices.push(prefix + '/' + _part + '.json');
           } else {
-            prefix = _part ? (prefix + '/' + _part) : prefix;
-            iterate(parts, i+1, prefix);
+            var _prefix = _part ? (prefix + '/' + _part) : prefix;
+            iterate(parts, i+1, _prefix);
           }
         }
       }
-      iterate(parts, 0, options.base);
+      iterate(parts, 0, base);
     }
     callback({
       fileName: choices
@@ -67,10 +75,23 @@ module.exports = function (options) {
             // remove the initial slash
             path = path.substring(1);
           }
-          return getFileNameChoices(requestOptions.req, path, callback);
+          return getFileNameChoices(requestOptions.req, path, options.base, callback);
+        } else {
+          // check to see if match values were provided
+          if (options.match) {
+            for (var prefix in options.match) {
+              // 'files': /files/(*)/
+              var regex = options.match[prefix],
+                  _match = uri.match(regex);
+              if (_match) {
+                var filePath = _match[1];
+                return getFileNameChoices(requestOptions.req, filePath, prefix, callback);
+              }
+            }
+          }
         }
       }
       callback();
     }
-  }
-}
+  };
+};

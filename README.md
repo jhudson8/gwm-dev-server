@@ -18,7 +18,10 @@ var gulp = require('gulp')
 require('gwm-dev-server')({
   port: 8000,
   mocks: {
-    prefix: '/services/'
+    prefix: '/services/',
+    match: {
+      'filePathPrefix': /uriRegex(fileMatch)/
+    }
   },
   plugins: [
     ...
