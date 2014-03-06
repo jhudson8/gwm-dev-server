@@ -27,6 +27,7 @@ function respondWithFile(res, req, fileName) {
 
     }
   }
+  console.log('no requested files found: ' + JSON.stringify(fileNames));
   return false;
 }
 
@@ -45,6 +46,8 @@ module.exports = function (options) {
   }
 
   function startServer() {
+    console.log('dev server started (' + options.port + ')');
+
     return http.createServer(function (req, res) {
       var uri = url.parse(req.url).pathname,
         requestOptions = {
@@ -69,7 +72,7 @@ module.exports = function (options) {
             });
             res.write('No plugins handled "' + uri + '"');
             res.end();
-            console.log('request not handled: ' + uri);
+            console.log('request not handled: ' + uri + ' (' + req.method + ')');
           }
         }
 
