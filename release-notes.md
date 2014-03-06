@@ -2,7 +2,14 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gwm-dev-server/compare/v0.0.2...master)
+[Commits](https://github.com/jhudson8/gwm-dev-server/compare/v0.0.3...master)
+
+## v0.0.3 - March 5th, 2014
+
+- added "match" config parameter - c0d6229
+- added helpful console messages - a7ef828
+
+[Commits](https://github.com/jhudson8/gwm-dev-server/compare/v0.0.2...v0.0.3)
 
 ## v0.0.2 - March 1st, 2014
 
