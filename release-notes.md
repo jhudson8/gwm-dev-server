@@ -2,7 +2,13 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gwm-dev-server/compare/v0.0.3...master)
+[Commits](https://github.com/jhudson8/gwm-dev-server/compare/v0.0.4...master)
+
+## v0.0.4 - March 14th, 2014
+
+- add svg mime type - d002580
+
+[Commits](https://github.com/jhudson8/gwm-dev-server/compare/v0.0.3...v0.0.4)
 
 ## v0.0.3 - March 5th, 2014
 
