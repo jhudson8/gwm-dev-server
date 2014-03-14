@@ -1,6 +1,6 @@
 {
   "name": "gwm-dev-server",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Joe Hudson <joehud@gmail.com>",
   "description": "Development server made for gulp-web-modules but can be used standalone",
   "repository": {
