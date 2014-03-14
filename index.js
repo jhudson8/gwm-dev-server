@@ -8,7 +8,8 @@ var mimeTypes = {
   "jpg": "image/jpeg",
   "png": "image/png",
   "js": "text/javascript",
-  "css": "text/css"
+  "css": "text/css",
+  "svg": "image/svg+xml"
 };
 
 function respondWithFile(res, req, fileName) {
