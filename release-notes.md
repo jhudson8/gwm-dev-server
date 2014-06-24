@@ -2,7 +2,12 @@
 
 ## Development
 
-[Commits](https://github.com/jhudson8/gwm-dev-server/compare/v0.0.4...master)
+[Commits](https://github.com/jhudson8/gwm-dev-server/compare/v0.0.5...master)
+
+## v0.0.5 - June 23rd, 2014
+- add better file serving error handling - b3e8c10
+
+[Commits](https://github.com/jhudson8/gwm-dev-server/compare/v0.0.4...v0.0.5)
 
 ## v0.0.4 - March 14th, 2014
 
