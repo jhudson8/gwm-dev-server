@@ -8,6 +8,6 @@ module.exports = {
     }
     callback({
       fileName: path.join(pluginOptions.base, uri)
-    })
+    });
   }
 };

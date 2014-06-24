@@ -14,18 +14,29 @@ var mimeTypes = {
 
 function respondWithFile(res, req, fileName) {
   var fileNames = Array.isArray(fileName) ? fileName : [fileName];
-
   for (var i in fileNames) {
     fileName = fileNames[i];
+    try {
+      var fStat = fs.lstatSync(fileName);
+      if (fStat.isDirectory()) {
+        fileName = fileName + '/index.html';
+      }
+    } catch (e) {console.error(e);}
+    
+    try {
+      if (fs.existsSync(fileName)) {
+        var mimeType = mimeTypes[path.extname(fileName).split(".")[1]];
+        if (mimeType) {
+          res.setHeader("Content-Type", mimeType);
+        }
+        res.writeHead(200);
 
-    if (fs.existsSync(fileName)) {
-      var mimeType = mimeTypes[path.extname(fileName).split(".")[1]];
-      res.writeHead(200, mimeType);
-
-      var readStream = fs.createReadStream(fileName);
-      readStream.pipe(res);
-      return true;
-
+        var readStream = fs.createReadStream(fileName);
+        readStream.pipe(res);
+        return true;
+      }
+    } catch (e) {
+      console.error(e);
     }
   }
   console.log('no requested files found: ' + JSON.stringify(fileNames));
